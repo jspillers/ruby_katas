@@ -38,17 +38,17 @@ RSpec.describe Checkout do
   end
 
   it 'costs 80 for products A, B ' do
-    expect(price('AB')).to eq 15
+    expect(price('AB')).to eq 80
   end
 
   it 'costs 115 for products C, D, B, A' do
-    expect(price('CDBA')).to eq 15
+    expect(price('CDBA')).to eq 115
   end
 
   context 'product A has an offer:' do
 
     it 'costs 130 for A, A, A' do
-      expect(price('AAA')).to eq 15
+      expect(price('AAA')).to eq 130
     end
 
   end
@@ -56,7 +56,7 @@ RSpec.describe Checkout do
   context 'product B has an offer' do
 
     it 'costs 45 for B, B' do
-      expect(price('BB')).to eq 15
+      expect(price('BB')).to eq 45
     end
 
   end
