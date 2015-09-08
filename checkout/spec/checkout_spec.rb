@@ -1,4 +1,5 @@
 require 'rspec'
+require 'pry'
 require File.dirname(__FILE__) + '/../lib/checkout'
 
 # Item  Price   Offer
@@ -11,8 +12,15 @@ require File.dirname(__FILE__) + '/../lib/checkout'
 RSpec.describe Checkout do
 
   def price(goods = [])
-    prices_and_offers = '' # or {}, [] ...?
-    co = Checkout.new(prices_and_offers)
+    pricing_rules = { :a => { :price => 50 },
+                      :b => { :price => 30 },
+                      :c => { :price => 20 },
+                      :d => { :price => 15 },
+                      :offers => { :a => { 3 => 130 },
+                                   :b => { 2 => 45 } 
+                                 }
+                    }
+    co = Checkout.new(pricing_rules)
     goods.each { |item| co.scan(item) }
     co.total
   end
@@ -57,6 +65,14 @@ RSpec.describe Checkout do
 
     it 'costs 45 for B, B' do
       expect(price(['B', 'B'])).to eq 45
+    end
+
+  end
+
+  context 'product B and A has an offer' do
+
+    it 'costs 45 for A, A, A, B, B' do
+      expect(price(['A', 'A', 'A', 'B', 'B'])).to eq 45
     end
 
   end
